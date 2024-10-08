@@ -1,4 +1,4 @@
-VERSION = "0.2.0"
+VERSION = "0.2.1"
 
 local micro = import("micro")
 local buffer = import("micro/buffer")
@@ -18,8 +18,8 @@ local Snippet = {}
 Snippet.__index = Snippet
 
 -- Snippets
---      --> Snippet
---                --> Location
+--    --> Snippet
+--        --> Location
 
 function Location.new(idx, ph, snippet)
 	debug1("Location.new(idx, ph, snip) idx = " , idx)
@@ -45,7 +45,7 @@ function Location.offset(self)
 		end
 
 		local val = loc.ph.value
-        micro.Log("VAL", val)
+		micro.Log("VAL", val)
 		if val then
 			add = add + val:len()
 		end
@@ -75,7 +75,7 @@ end
 function Location.endPos(self)
 	debug("Location.endPos(self)")
 	local start = self:startPos()
-    micro.Log("ENDPOS", self.ph.value)
+	micro.Log("ENDPOS", self.ph.value)
 	return start:Move(self:len(), self.snippet.view.buf)
 end
 
@@ -90,17 +90,17 @@ function Location.focus(self)
 	local view = self.snippet.view
 	local startP = self:startPos():Move(-1, view.Buf)
 	local endP = self:endPos():Move(-1, view.Buf)
-    micro.Log(startP, endP)
+	micro.Log(startP, endP)
 
-    if view.Cursor:LessThan(startP) then
-        while view.Cursor:LessThan(startP) do
-            view.Cursor:Right()
-        end
-    elseif view.Cursor:GreaterEqual(endP) then
-        while view.Cursor:GreaterEqual(endP) do
-            view.Cursor:Left()
-        end
-    end
+	if view.Cursor:LessThan(startP) then
+		while view.Cursor:LessThan(startP) do
+			view.Cursor:Right()
+		end
+	elseif view.Cursor:GreaterEqual(endP) then
+		while view.Cursor:GreaterEqual(endP) do
+			view.Cursor:Left()
+		end
+	end
 
 	if self.ph.value:len() > 0 then
 		view.Cursor:SetSelectionStart(startP)
@@ -199,7 +199,7 @@ function Snippet.Prepare(self)
 			num = tonumber(num)
 			local idx = self.code:find(pattern)
 			self.code = self.code:gsub(pattern, "", 1)
-            micro.Log("IDX", idx, self.code)
+			micro.Log("IDX", idx, self.code)
 
 			local placeHolders = self.placeholders[num]
 			if not placeHolders then
@@ -286,15 +286,13 @@ local function CursorWord(bp)
 	local result = ""
 	while x >= 0 do
 		local r = util.RuneStr(c:RuneUnder(x))
-		if (r:match("^%s")) then    -- IsWordChar(r) then
+		if (r:match("^%s")) then  -- IsWordChar(r) then
 			break
 		else
 			result = r .. result
 		end
 		x = x-1
 	end
-
-
 	return result
 end
 
@@ -390,10 +388,10 @@ end
 -- Pass in the name of the snippet to be inserted by command mode
 -- No name passed in then it will check the text left of the cursor
 function Insert(bp, args)
-    local snippetName = nil
-    if args ~= nil and #args > 0 then
-        snippetName = args[1]
-    end
+	local snippetName = nil
+	if args ~= nil and #args > 0 then
+		snippetName = args[1]
+	end
 	debug1("Insert(snippetName)",snippetName)
 
 	local c = bp.Cursor
@@ -486,7 +484,7 @@ end
 function findSnippet(input)
 	debug1("findSnippet(input)",input)
 	local result = {}
-    -- TODO: pass bp
+	-- TODO: pass bp
 	EnsureSnippets()
 
 	for name,v in pairs(snippets) do
@@ -529,33 +527,33 @@ end
 -- dump table
 function dump(o)
 	if type(o) == 'table' then
-	   local s = '{ '
-	   for k,v in pairs(o) do
-		  if type(k) ~= 'number' then k = '"'..k..'"' end
-		  s = s .. '['..k..'] = ' .. dump(v) .. ','
-	   end
-	   return s .. '} '
+		 local s = '{ '
+		 for k,v in pairs(o) do
+			if type(k) ~= 'number' then k = '"'..k..'"' end
+			s = s .. '['..k..'] = ' .. dump(v) .. ','
+		 end
+		 return s .. '} '
 	else
-	   return tostring(o)
+		 return tostring(o)
 	end
  end
 
  function tprint (tbl, indent)
 	if not indent then indent = 0 end
 	for k, v in pairs(tbl) do
-	  formatting = string.rep("  ", indent) .. k .. ": "
-	  if type(v) == "table" then
+		formatting = string.rep("  ", indent) .. k .. ": "
+		if type(v) == "table" then
 		micro.Log(formatting .. "Table ->")
 		tprint(v, indent+1)
-	  elseif type(v) == nil then 
+		elseif type(v) == nil then 
 		micro.Log(formatting .. " nil")
 	else
 		micro.Log(formatting .. tostring(v))
-	  end
+		end
 	end
-  end
+	end
 
-  function checkTableisEmpty(myTable)
+	function checkTableisEmpty(myTable)
 	if next(myTable) == nil then
 		-- myTable is empty
 	 end
@@ -564,24 +562,24 @@ end
 function tablePrint(tbl)
 	for index = 1, #tbl do
 		micro.Log(tostring(index) .. " = " .. tostring(tbl[index]))
-    end
+	end
 end
 
 function init()
-    -- Insert a snippet
-    config.MakeCommand("snippetinsert", Insert, config.NoComplete)
-    -- Mark next placeholder
-    config.MakeCommand("snippetnext", Next, config.NoComplete)
-    -- Cancel current snippet (removes the text)
-    config.MakeCommand("snippetcancel", Cancel, config.NoComplete)
-    -- Acceptes snipped editing
-    config.MakeCommand("snippetaccept", Accept, config.NoComplete)
+	-- Insert a snippet
+	config.MakeCommand("snippetinsert", Insert, config.NoComplete)
+	-- Mark next placeholder
+	config.MakeCommand("snippetnext", Next, config.NoComplete)
+	-- Cancel current snippet (removes the text)
+	config.MakeCommand("snippetcancel", Cancel, config.NoComplete)
+	-- Acceptes snipped editing
+	config.MakeCommand("snippetaccept", Accept, config.NoComplete)
 
-    config.AddRuntimeFile("snippets", config.RTHelp, "help/snippets.md")
-    config.AddRuntimeFilesFromDirectory("snippets", RTSnippets, "snippets", "*.snippets")
+	config.AddRuntimeFile("snippets", config.RTHelp, "help/snippets.md")
+	config.AddRuntimeFilesFromDirectory("snippets", RTSnippets, "snippets", "*.snippets")
 
-    config.TryBindKey("Alt-w", "lua:snippets.Next", false)
-    config.TryBindKey("Alt-a", "lua:snippets.Accept", false)
-    config.TryBindKey("Alt-s", "lua:snippets.Insert", false)
-    config.TryBindKey("Alt-d", "lua:snippets.Cancel", false)
+	config.TryBindKey("Alt-w", "lua:snippets.Next", false)
+	config.TryBindKey("Alt-a", "lua:snippets.Accept", false)
+	config.TryBindKey("Alt-s", "lua:snippets.Insert", false)
+	config.TryBindKey("Alt-d", "lua:snippets.Cancel", false)
 end
