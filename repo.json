@@ -6,7 +6,7 @@
 	"Versions": [
 		{
 			"Version": "0.2.1",
-			"Url": "https://github.com/tsilvs/snippets.micro/releases/download/v0.2.1/snippets-0.2.1.zip",
+			"Url": "https://github.com/tsilvs/snippets.micro/archive/refs/tags/0.2.1.zip",
 			"Require": {
 				"micro": ">=2.0.0-1"
 			}
