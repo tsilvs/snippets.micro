@@ -1,6 +1,6 @@
 # About
 
-`snippets` plugin is designed to work with simple Vim `.snippets` or `.snip` snippets (e.g. [these][honza/vim-snippets])
+`snippets` plugin is designed to work with simple Vim `.snippets` snippets (e.g. [these][honza/vim-snippets])
 
 The plugin is shipped with snippets, typically at `~/.config/micro/plug/snippets/snippets/[filetype].snippets`.
 
@@ -10,12 +10,12 @@ Add custom snippets there, or submit a pull request to include the snippets in t
 
 The plugin provides the following commands:
 
-| Command         | Description                                                                     | Key     |
-|-----------------|---------------------------------------------------------------------------------|---------|
-| `snippetinsert` | Insert a snippet: specify in parameter, or word left to the cursor will be used | `Alt+S` |
-| `snippetnext`   | proceeds to the next placeholder                                                | `Alt+W` |
-| `snippetcancel` | removes all the current snippet                                                 | `Alt+D` |
-| `snippetaccept` | finishes the snippet editing for the current snippet                            | `Alt+A` |
+| Command         | Key     | Description                                                                     |
+|-----------------|---------|---------------------------------------------------------------------------------|
+| `snippetinsert` | `Alt+S` | Insert a snippet: specify in parameter, or word left to the cursor will be used |
+| `snippetnext`   | `Alt+W` | proceeds to the next placeholder                                                |
+| `snippetcancel` | `Alt+D` | removes all the current snippet                                                 |
+| `snippetaccept` | `Alt+A` | finishes the snippet editing for the current snippet                            |
 
 ## Snippet File syntax
 
@@ -36,7 +36,7 @@ Plugins can provide additional `.snippets` files as *runtime* files. Execute `he
 
 ### Substitutions
 
-TODO
+*TODO*
 
 ### Examples
 
